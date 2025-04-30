@@ -41,28 +41,28 @@
 
    <!-- Tarjeta de Registro -->
    <div class="card shadow-sm mb-3 d-none fondo" id="register-card">
-    <div class="card-body">
+    <div class="row card-body">
       <h3 class="card-title text-center mb-4 text-white" style>Crear Cuenta</h3>
       <form id="register-form">
-        <div class="form-group mt-4 mb-2">
+        <div class="col-4 form-group mt-4 mb-2">
           <label for="nombre">Nombre</label>
           <input type="text" class="form-control" id="nombre" placeholder="Nombre">
-      </div>
-      <div class="row justify-content-between align-items-center">
-        <div class="col-6">
-            <select class="form-select" name="sexo" id="sexo" aria-label="Default select example">
-              <option selected>Sexo</option>
-              <option value="M">M</option>
-              <option value="F">F</option>
-            </select>
         </div>
-        <div class="col-6 mb-4">
-            <div class="form-group">
-              <label for="edad"></label>
-              <input  type="edad" class="form-control" id="edad" placeholder="Edad" required></input>
-            </div>
+        <div class="row justify-content-between align-items-center">
+          <div class="col-6">
+              <select class="form-select" name="sexo" id="sexo" aria-label="Default select example">
+                <option selected>Sexo</option>
+                <option value="M">M</option>
+                <option value="F">F</option>
+              </select>
+          </div>
+          <div class="col-6 mb-4">
+              <div class="form-group">
+                <label for="edad"></label>
+                <input  type="edad" class="form-control" id="edad" placeholder="Edad" required></input>
+              </div>
+          </div>
         </div>
-      </div>
         <div class="mb-3">
           <input type="email" id="register-email" class="form-control" placeholder="Correo electrónico" required>
         </div>
