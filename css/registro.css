@@ -1,0 +1,136 @@
+/* Fondo con gradiente animado con tonos oscuros */
+body {
+    background: linear-gradient(45deg, #010101, #a6aeb5, #0e0e0e, #737270);
+
+    background-size: 400% 400%;
+    animation: gradientAnimation 10s ease infinite;
+    font-family: 'Roboto', sans-serif;
+    height: 150%;
+    width: 100%;
+    margin: 0;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Animación de fondo */
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupar toda la pantalla */
+    width: 100%;
+}
+
+/* Estilos del formulario (tarjeta) */
+.card {
+    background: rgba(255, 255, 255, 0.1); /* Fondo semitransparente */
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px; /* Tamaño mediano */
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+/* Título centrado */
+h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Estilo para los inputs */
+input[type="text"], input[type="email"], input[type="file"] {
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    padding: 14px;
+    font-size: 16px;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="file"]:focus {
+    border: 2px solid #f39c12;
+    outline: none;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Botón amarillo con efectos */
+.btn-glow {
+    background-color: transparent;
+    color: #f8d210;
+    border: 3px solid #f8d210;
+    padding: 14px 20px;
+    font-size: 18px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(248, 210, 16, 0.8);
+    transition: all 0.4s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    width: 30%; /* Botón de ancho completo */
+    margin-top: 20px;
+    margin-left:150px;
+}
+
+.btn-glow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(248, 210, 16, 0.8) 10%, transparent 60%);
+    transition: all 0.6s ease-out;
+    transform: translate(-50%, -50%) scale(0);
+}
+
+.btn-glow:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.btn-glow:hover {
+    background-color: #f8d210;
+    color: #111;
+    box-shadow: 0 0 30px rgba(248, 210, 16, 1);
+    transform: scale(1.1);
+}
+
+.btn-glow:active {
+    transform: scale(1.15);
+    background-color: #ffcc00;
+    border-color: #ffcc00;
+    box-shadow: 0 0 40px rgba(255, 204, 0, 1);
+}
+
+/* Imagen previsualización */
+#previsualizacion {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo para el texto de ayuda */
+.help-block {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-top: 5px;
+}
+

@@ -1,0 +1,219 @@
+body {
+    margin: 0;
+    padding: 0;
+  
+   
+    min-height: 100vh; /* Asegura que el body ocupe toda la altura de la pantalla */
+
+
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo general del contenido */
+#content {
+    flex: 1; /* Esto asegura que el contenido ocupe el espacio disponible */
+}
+
+/* Menú lateral */
+.menu {
+    width: 280px;
+    height: 100vh;
+    background: linear-gradient(135deg, #6a0dad, #9b30ff);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    position: fixed;
+    left: -280px;
+    top: 0;
+    transition: left 0.3s ease-in-out;
+    box-shadow: 4px 0 10px rgba(255, 0, 255, 0.5);
+    z-index: 1000;
+}
+
+.menu.open {
+    left: 0;
+}
+
+.btn-salir {
+    margin-top: auto;
+    padding: 12px 20px;
+    background: #ff00ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 18px;
+    width: 100%;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.btn-salir:hover {
+    background: #d400d4;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
+}
+
+/* Botón para abrir/cerrar el menú lateral */
+.toggle-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: #ff00ff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+    transition: background 0.3s;
+    z-index: 1100;
+}
+
+.toggle-btn:hover {
+    background: #d400d4;
+}
+
+/* Capa de fondo */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 900;
+}
+
+.overlay.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Imagen de usuario */
+img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    font-size: 24px;
+    font-weight: bold;
+    color: #6a0dad;
+    background: white;
+    border: 5px solid #ff00ff;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
+    border-radius: 50%;
+    margin-top: 100px;
+}
+
+#padre {
+    height: 100%;
+    position: relative;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+/* Botón al pie de página (para escritorio) */
+#ver {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 12px 20px;
+    background: #ff00ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 18px;
+    justify-content: center;
+    transition: 0.3s;
+    box-shadow: 0 4px 8px rgba(255, 0, 255, 0.3);
+    text-align: center;
+}
+
+/* Cambiar color al hacer hover */
+#ver:hover {
+    background: #d400d4;
+    box-shadow: 0 4px 12px rgba(255, 0, 255, 0.6);
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column; /* Acomoda los elementos en vertical */
+    align-items: center; /* Centra los elementos horizontalmente */
+    gap: 15px; /* Espacio entre los elementos */
+    height: 100vh; /* Opcional: centra en la pantalla */
+    justify-content: center; /* Opcional: centra en la pantalla */
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column; /* Inputs en vertical */
+    gap: 10px;
+}
+
+.input-container {
+    display: flex;
+    align-items: center; /* Centra el icono y el input en línea */
+    gap: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.icon {
+    font-size: 20px;
+}
+
+input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    width: 200px;
+}
+
+.button-container {
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* Mostrar el footer en pantallas más pequeñas */
+@media (max-width: 768px) {
+    footer {
+        display: block; /* Mostrar footer solo en dispositivos móviles */
+    }
+    #ver {
+        display: flex; /* Ocultar el botón de pie de página en móviles */
+    }
+}

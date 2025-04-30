@@ -1,0 +1,164 @@
+/* Fondo oscuro con transición suave */
+body {
+    background: #121212;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    transition: background-color 0.5s ease;
+    padding: 0;
+    margin: 0;
+  justify-items: center;
+  margin: 10%;
+  text-align: center;
+}
+
+/* Estilos para la lista de usuarios */
+#listado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+ 
+ 
+    
+    border: 2px solid #9b59b6; /* Borde lila alrededor de la lista */
+    border-radius: 10px; /* Bordes redondeados */
+    background-color: #1a1a1a; /* Fondo oscuro para la lista */
+  
+    font-size: 14px;
+     
+      flex-direction: column;
+    
+   
+      margin-bottom: 20px;
+      min-width: 50vh;
+      
+      
+  
+}
+
+/* Contenedor de cada usuario */
+.user-item {
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px; /* Separación con margin-bottom lila */
+    transition: margin 0.3s ease;
+}
+
+/* Estilo del botón de usuario con fondo oscuro */
+.user-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #1f1f1f;
+    border: 2px solid #333;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s, background 0.3s;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Efecto al hacer hover */
+.user-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+    background: #333;
+}
+
+/* Imagen de usuario redondeada */
+.user-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+/* Nombre del usuario sin subrayado y con tamaño mayor */
+.user-name {
+    font-size: 22px; /* Aumentar tamaño del nombre */
+    font-weight: 600;
+    color: #f0f0f0;
+    margin-top: 5px;
+    text-decoration: none; /* Quitar subrayado */
+}
+
+/* Estilo de la lista al hacer scroll */
+#listado::-webkit-scrollbar {
+    width: 8px;
+}
+
+#listado::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+#listado::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+#atras{
+    margin-top: auto;
+    padding: 12px 20px;
+    background: #ff00ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 18px;
+    width: 100%;
+    text-align: center;
+    transition: 0.3s;
+    position: relative;
+    width: 60%;
+}
+/* Footer responsive para pantallas pequeñas */
+#mobileFooter {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    font-size: 14px;
+}
+
+/* Ajustes específicos para móviles pequeños (menos de 480px) */
+@media (max-width: 480px) {
+    #mobileFooter {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+/* Estilos para la lista de usuarios */
+body{
+    justify-items: start;
+    
+    
+}
+#listado {
+    display: flex;
+    flex-direction: column;
+    
+    min-width: 50vh;
+    justify-items: start;
+ 
+   font-size: 200px;
+
+    flex-direction: column;
+
+    
+    
+
+ 
+}
+ 
+}
+
+

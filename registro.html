@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/registro.css"> <!-- Tu CSS personalizado -->
+
+ 
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        
+    </nav>
+    <div class="container-fluid">
+        <form id="formularioAlta">
+            <div class="form-group mt-4 mb-4">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+            </div>
+            <select class="form-select mb-3" name="sexo" id="sexo" aria-label="Default select example">
+                <option selected>Sexo</option>
+                <option value="M">M</option>
+                <option value="F">F</option>
+                
+            </select>
+            <div class="form-group">
+                <label for="correo">Correo</label>
+                <input  type="email" class="form-control" id="email" placeholder="Correo eléctronico" rows="3"></input>
+            </div>
+            <div class="form-group md-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" required minlength="6"/>
+            </div>
+            <div class="form-group">
+                <label for="ciudad">Ciudad</label>
+                <input type="text" class="form-control" id="ciudad" placeholder="Ciudad">
+            </div>
+       
+            <div class="form-group">
+                <label for="imagen">Elegir Imagen</label>
+                <input type="file" id="imagen">
+                <p class="help-block">Elija una imagen para este artículo</p>
+                <img id="previsualizacion">
+            </div>
+            <button type="button" class="btn btn-glow" id="botonGuardar">Guardar</button>
+        </form>
+    </div>
+
+
+    <script>
+        /* configuracion conection vero
+        var config = {
+            apiKey: "AIzaSyDPhU_Oz4AgZDgLxBK9-cY0yULn6s9YG2k",
+            authDomain: "connection-bc106.web.app",
+            databaseURL: "https://connection-bc106-default-rtdb.firebaseio.com/",
+            projectId: "connection-bc106",
+            storageBucket: "connection-bc106.firebasestorage.app",
+            messagingSenderId: "314231053868",
+            appId: "1:314231053868:android:b2c367fd1569a84266fb89"
+        };
+        firebase.initializeApp(config);
+        */
+    </script>
+
+
+
+    <script src="js/setCoordenadas.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  
+    <script src="js/position.js"></script>
+    <script src="js/openPerfil.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/setPerfil.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>	
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
+
+
+ 
+
+</body>
+</html>    
+       
