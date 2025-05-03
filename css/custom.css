@@ -35,6 +35,12 @@ body {
   
 }
 
+/* Estilo para card reegistro */
+.card-registro {
+    max-width: 350px;
+    min-width: 350px;
+}
+
 /* Contenedor de cada usuario */
 .user-item {
     width: 100%;
@@ -153,12 +159,7 @@ body{
 
     flex-direction: column;
 
-    
-    
-
- 
 }
  
 }
-
 

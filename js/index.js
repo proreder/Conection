@@ -1,7 +1,7 @@
 // Importar los módulos necesarios de Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
 // Configuración de Firebase
@@ -45,7 +45,8 @@ function login(e) {
     })
     .catch(error => {
       // Mostrar error
-      showAlert(error.message, 'danger');
+      showTemporaryAlert('Email o contraseña incorrectos.', 'danger'); // Mostrar alerta de error
+      //showAlert(error.message, 'danger');
     });
 }
 
@@ -57,17 +58,25 @@ function register(e) {
   const email = document.getElementById('register-email').value;
   const password = document.getElementById('register-password').value;
 
+  // Intentar crear el usuario
   createUserWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
-      //si el usario se crea guardamos los datos del usuario
+      // Si el usuario se crea correctamente, guardar datos del perfil
       setPerfil();
-      // Registro exitoso
       showAlert('Cuenta creada exitosamente.', 'success');
+      
       console.log('Nuevo usuario registrado:', userCredential.user);
-      showLogin(); // Volver al login después de registrarse
+      //showLogin(); // Volver al login después de registrarse
     })
     .catch(error => {
-      showAlert(error.message, 'danger');
+      if (error.code === 'auth/email-already-in-use') {
+        // Mostrar alerta si el correo ya está en uso
+        showAlert('El correo electrónico ya está registrado. Por favor, usa otro.', 'danger');
+      } else {
+        console.error('Error al registrar el usuario:', error);
+        // Manejar otros errores
+        showAlert(error.message, 'danger');
+      }
     });
 }
 
@@ -89,74 +98,80 @@ function resetPassword(e) {
 }
 
 function setPerfil() {
-  var nombre, email, edad, imagen, ciudad;
-  // Aquí puedes implementar la lógica para establecer el perfil del usuario
-  // Por ejemplo, guardar datos en Firestore o en Realtime Database
-       nombre = $("#nombre").val();
-        email = $("#email").val();
-        ciudad = $("#ciudad").val();
+  var nombre, email, edad, ciudad, file, imagen, img_json;
 
-        if (!imagen) {
-            imagen = "NONE";
-        }
+  nombre = $("#nombre").val();
+  email = $("#register-email").val();
+  ciudad = $("#ciudad").val() || "Sin especificar"; // Valor predeterminado si está vacío
+  edad = $("#edad").val();
+  file = getFileFromInput("imagen");
 
-        var datosUsuario = {
-            nombre: nombre,
-            edad: edad,
-            email: email,
-            ciudad: ciudad,
-            url_imagen: imagen,
-        };
+  console.log("file", file);
+  if (!file) {
+    console.error("No se seleccionó ningún archivo.");
+    return;
+  }
+
+  saveImageAsJSON(file).then((img_json) => {
+    
+    var datosUsuario = {
+      nombre: nombre,
+      edad: edad,
+      email: email,
+      ciudad: ciudad,
+      imagen: img_json,
+    };
+    console.log("Datos del usuario:", datosUsuario);
+
+    // Guardar datos en Firestore
+    const userId = auth.currentUser.uid; // Obtener el ID del usuario autenticado
+    const userRef = doc(db, 'usuarios', userId); // Crear una referencia al documento del usuario
+
+    setDoc(userRef, datosUsuario)
+      .then(() => {
+        console.log("Datos del usuario guardados en Firestore:", datosUsuario);
+        showTemporaryAlert('Cueta creada.', 'success'); // Mostrar alerta de éxito
+        showLogin();
+      })
+      .catch((error) => {
+        console.error("Error al guardar los datos en Firestore:", error);
+        showTemporaryAlert('Error al guardar los datos.', 'danger'); // Mostrar alerta de error
+      });
+  }).catch((error) => {
+    console.error("Error al procesar la imagen:", error);
+    showTemporaryAlert('Error al procesar la imagen.', 'danger'); // Mostrar alerta de error
+  });
 
   console.log('Establecer perfil del usuario...');
-  return;
 }
 
+
 /**
- * Función para subir una imagen a Firebase Storage, obtener su URL y guardarla en Firestore
- * @param {File} file - Archivo de imagen a subir
+ * Función para convertir una imagen a un objeto JSON
+ * @param {File} file - Archivo de imagen a convertir
+ * @returns {Promise<Object>} - Objeto JSON con los datos de la imagen
  */
-async function uploadImageAndSaveURL(file) {
+async function saveImageAsJSON(file) {
   try {
-    // Crear una referencia en Firebase Storage
-    const storageRef = ref(storage, `images/${file.name}`);
-
-    // Subir el archivo a Firebase Storage
-    const snapshot = await uploadBytes(storageRef, file);
-    console.log('Imagen subida exitosamente:', snapshot);
-
-    // Obtener la URL de descarga
-    const downloadURL = await getDownloadURL(storageRef);
-    console.log('URL de descarga:', downloadURL);
-
-    // Guardar la URL en Firestore (ejemplo)
-    const docRef = await db.collection('images').add({
-      url: downloadURL,
-      name: file.name,
-      createdAt: new Date()
+    const reader = new FileReader();
+    return new Promise((resolve, reject) => {
+      reader.onload = () => {
+        const imageData = {
+          name: file.name,
+          type: file.type,
+          size: file.size,
+          content: reader.result
+        };
+        resolve(imageData);
+      };
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(file);
     });
-    console.log('URL guardada en Firestore con ID:', docRef.id);
-
-    return downloadURL;
   } catch (error) {
-    console.error('Error al subir la imagen o guardar la URL:', error);
+    console.error('Error al convertir la imagen a JSON:', error);
     throw error;
   }
 }
-
-// Ejemplo de uso: manejar el evento de cambio en un input de tipo file
-document.getElementById('file-input').addEventListener('change', async (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    try {
-      const url = await uploadImageAndSaveURL(file);
-      console.log('Imagen procesada correctamente. URL:', url);
-    } catch (error) {
-      console.error('Error al procesar la imagen:', error);
-    }
-  }
-});
-
 
 /**
  * Mostrar un mensaje de alerta
@@ -165,10 +180,64 @@ document.getElementById('file-input').addEventListener('change', async (event) =
  */
 function showAlert(message, type) {
   const alertContainer = document.getElementById('alert-container');
+  if (!alertContainer) {
+    console.error('El contenedor de alertas no existe en el DOM.');
+    return;
+  }
+
   alertContainer.innerHTML = `
     <div class="alert alert-${type} alert-dismissible fade show mt-3" role="alert">
       ${message}
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
     </div>
   `;
+}
+
+/**
+ * Función para obtener un archivo de un elemento de entrada de archivo dado su ID
+ * @param {string} inputId - ID del elemento de entrada de archivo
+ * @returns {File|null} - Archivo seleccionado o null si no se seleccionó ningún archivo
+ */
+function getFileFromInput(inputId) {
+  const fileInput = document.getElementById(inputId);
+  if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+    console.error('No se seleccionó ningún archivo.');
+    return null;
+  }
+  return fileInput.files[0];
+}
+
+document.getElementById('labelarchivo').addEventListener('click', function() {
+  const fileInput = document.getElementById('imagen');
+  if (fileInput) {
+    fileInput.click();
+  } else {
+    console.error('El input file con ID "imagen" no existe.');
+  }
+});
+
+//muestra una alerta temporal de 4 segundos con autocierre
+function showTemporaryAlert(message, type) {
+  console.error('El contenedor de alertas');
+  const alertContainer = document.getElementById('alert-container');
+  if (!alertContainer) {
+    console.error('El contenedor de alertas no existe en el DOM.');
+    return;
+  }
+
+  const alertElement = document.createElement('div');
+  alertElement.className = `alert alert-${type} alert-dismissible fade show mt-3`;
+  alertElement.role = 'alert';
+  alertElement.innerHTML = `
+    ${message}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+  `;
+
+  alertContainer.appendChild(alertElement);
+
+  // Eliminar la alerta automáticamente después de 3 segundos
+  setTimeout(() => {
+    alertElement.classList.remove('show');
+    alertElement.addEventListener('transitionend', () => alertElement.remove());
+  }, 4000);
 }
