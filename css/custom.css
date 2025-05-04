@@ -16,23 +16,14 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
- 
- 
-    
     border: 2px solid #9b59b6; /* Borde lila alrededor de la lista */
     border-radius: 10px; /* Bordes redondeados */
     background-color: #1a1a1a; /* Fondo oscuro para la lista */
-  
     font-size: 14px;
-     
-      flex-direction: column;
-    
-   
-      margin-bottom: 20px;
-      min-width: 50vh;
-      
-      
-  
+    flex-direction: column;
+    margin-bottom: 20px;
+    min-width: 50vh;
+    margin-top: 20px; /* Agrega espacio superior para separar el listado del encabezado */
 }
 
 /* Estilo para card reegistro */
@@ -161,5 +152,11 @@ body{
 
 }
  
+}
+
+h3 {
+  color: black; /* Asegura que el texto sea visible */
+  text-align: center; /* Centra el texto */
+  margin-top: 20px; /* Agrega espacio superior */
 }
 

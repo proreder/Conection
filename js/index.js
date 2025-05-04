@@ -42,6 +42,11 @@ function login(e) {
       // Login exitoso
       showAlert('Sesión iniciada correctamente.', 'success');
       console.log('Usuario logueado:', userCredential.user);
+      setTimeout(() => {
+        window.location.href = './listaUsuarios.html';
+      }, 3000);
+      // Redirigir a listaUsuarios.html después para listar usuarios
+      //window.location.href = 'listaUsuarios.html'; // Redirigir a la página de lista de usuarios
     })
     .catch(error => {
       // Mostrar error
@@ -241,3 +246,17 @@ function showTemporaryAlert(message, type) {
     alertElement.addEventListener('transitionend', () => alertElement.remove());
   }, 4000);
 }
+
+/*
+// verificar el estado de autenticación del usuario.
+//  Si el usuario está autenticado, se redirige automáticamente a listaUsuarios.html
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    console.log('Usuario autenticado:', user.email);
+    // Redirigir a listaUsuarios.html si el usuario está autenticado
+    window.location.href = 'listaUsuarios.html';
+  } else {
+    console.log('No hay usuario autenticado.');
+  }
+});
+*/

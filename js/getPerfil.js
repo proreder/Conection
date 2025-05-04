@@ -1,3 +1,18 @@
+import { getAuth } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { app } from "./index.js"; // Asegúrate de exportar `app` desde index.js
+
+export function getAuthenticatedUser() {
+  const auth = getAuth(app);
+  const user = auth.currentUser;
+  if (user) {
+    console.log("Usuario autenticado:", user.email);
+    return user;
+  } else {
+    console.error("No hay usuario autenticado.");
+    return null;
+  }
+}
+
 // Inicializar la base de datos
 var config = {
     appId: "1:314231053868:android:b2c367fd1569a84266fb89",
