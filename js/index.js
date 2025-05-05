@@ -39,8 +39,7 @@ function login(e) {
 
   signInWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
-      // Login exitoso
-      showAlert('Sesión iniciada correctamente.', 'success');
+      
       console.log('Usuario logueado:', userCredential.user);
       setTimeout(() => {
         window.location.href = './listaUsuarios.html';
@@ -68,19 +67,17 @@ function register(e) {
     .then(userCredential => {
       // Si el usuario se crea correctamente, guardar datos del perfil
       setPerfil();
-      showAlert('Cuenta creada exitosamente.', 'success');
-      
       console.log('Nuevo usuario registrado:', userCredential.user);
       //showLogin(); // Volver al login después de registrarse
     })
     .catch(error => {
       if (error.code === 'auth/email-already-in-use') {
         // Mostrar alerta si el correo ya está en uso
-        showAlert('El correo electrónico ya está registrado. Por favor, usa otro.', 'danger');
+        showAlert('El correo electrónico ya está registrado. Por favor, usa otro.', 'danger', 'alert-registro');
       } else {
         console.error('Error al registrar el usuario:', error);
         // Manejar otros errores
-        showAlert(error.message, 'danger');
+        showAlert(error.message, 'danger', 'alert-registro');
       }
     });
 }
@@ -94,21 +91,23 @@ function resetPassword(e) {
 
   sendPasswordResetEmail(auth, email)
     .then(() => {
-      showAlert('Correo de recuperación enviado.', 'info');
+      showAlert('Correo de recuperación enviado.', 'info', 'alert-login');
       showLogin();
     })
     .catch(error => {
-      showAlert(error.message, 'danger');
+      showAlert(error.message, 'danger', 'alert-login');
     });
 }
 
 function setPerfil() {
-  var nombre, email, edad, ciudad, file, imagen, img_json;
+  var nombre, email, edad, ciudad, file, imagen, facebook, instagram, img_json;
 
   nombre = $("#nombre").val();
   email = $("#register-email").val();
   ciudad = $("#ciudad").val() || "Sin especificar"; // Valor predeterminado si está vacío
   edad = $("#edad").val();
+  facebook = $("#facebook").val() || "Sin especificar";;
+  instagram = $("#instagram").val() || "Sin especificar";;
   file = getFileFromInput("imagen");
 
   console.log("file", file);
@@ -124,10 +123,11 @@ function setPerfil() {
       edad: edad,
       email: email,
       ciudad: ciudad,
+      facebook: facebook,
+      instagram: instagram,
       imagen: img_json,
     };
-    console.log("Datos del usuario:", datosUsuario);
-
+    
     // Guardar datos en Firestore
     const userId = auth.currentUser.uid; // Obtener el ID del usuario autenticado
     const userRef = doc(db, 'usuarios', userId); // Crear una referencia al documento del usuario
@@ -136,7 +136,7 @@ function setPerfil() {
       .then(() => {
         console.log("Datos del usuario guardados en Firestore:", datosUsuario);
         showTemporaryAlert('Cueta creada.', 'success'); // Mostrar alerta de éxito
-        showLogin();
+        
       })
       .catch((error) => {
         console.error("Error al guardar los datos en Firestore:", error);
@@ -178,13 +178,21 @@ async function saveImageAsJSON(file) {
   }
 }
 
+function closeAlertIfOpen(id) {
+  const alertContainer = document.getElementById(id);
+  if (alertContainer && alertContainer.children.length > 0) {
+    alertContainer.innerHTML = ''; // Elimina todas las alertas activas
+  }
+}
+
 /**
  * Mostrar un mensaje de alerta
  * @param {string} message - Texto del mensaje
  * @param {string} type - Tipo de alerta ('success', 'danger', 'info', etc.)
  */
-function showAlert(message, type) {
-  const alertContainer = document.getElementById('alert-container');
+function showAlert(message, type, id) {
+  
+  const alertContainer = document.getElementById(id);
   if (!alertContainer) {
     console.error('El contenedor de alertas no existe en el DOM.');
     return;
@@ -223,13 +231,13 @@ document.getElementById('labelarchivo').addEventListener('click', function() {
 
 //muestra una alerta temporal de 4 segundos con autocierre
 function showTemporaryAlert(message, type) {
-  console.error('El contenedor de alertas');
-  const alertContainer = document.getElementById('alert-container');
+  closeAlertIfOpen("alert-registro"); // Cierra cualquier alerta abierta
+  const alertContainer = document.getElementById('alert-registro');
   if (!alertContainer) {
     console.error('El contenedor de alertas no existe en el DOM.');
     return;
   }
-
+  console.log('El contenedor de alertas', alertContainer);
   const alertElement = document.createElement('div');
   alertElement.className = `alert alert-${type} alert-dismissible fade show mt-3`;
   alertElement.role = 'alert';
@@ -239,11 +247,13 @@ function showTemporaryAlert(message, type) {
   `;
 
   alertContainer.appendChild(alertElement);
-
+  const botonRegistro = $('#boton-registro');
   // Eliminar la alerta automáticamente después de 3 segundos
   setTimeout(() => {
+    botonRegistro.removeClass('disabled');
     alertElement.classList.remove('show');
     alertElement.addEventListener('transitionend', () => alertElement.remove());
+    showLogin(); // Volver al login después de registrarse
   }, 4000);
 }
 
