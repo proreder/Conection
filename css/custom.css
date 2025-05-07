@@ -160,3 +160,10 @@ h3 {
   margin-top: 20px; /* Agrega espacio superior */
 }
 
+.container {
+    display: flex;
+    flex-direction: column; /* Acomoda los elementos en columna */
+    align-items: center; /* Centra los elementos horizontalmente */
+    gap: 15px; /* Espacio entre los elementos */
+}
+
