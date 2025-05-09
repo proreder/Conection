@@ -81,16 +81,22 @@
 
 	<!-- Menú lateral -->
     <div class="menu-perfil">
-		<div class="container">		
-			<div class="row d-flex mx-auto justify-content-between align-items-center">
-				<div class="col-10">
-					<h3 class="col-9">Perfil de Usuario</h3>
+		<div class="d-flex">		
+			<div class="mx-auto justify-content-between">
+				<div class="col-10 mt-4">
+					<span>Perfil de Usuario</span>
 				</div>
 			
 			
-				<div class="col-12">
-					<img id="foto-perfil" alt="" class="foto-perfil"/>
-				</div>	
+				<div class="d-flex col-12 justify-content-between">
+					<div class="col-6 mt-5">
+						<span>Nombre de Usuario</span>
+						<input type="text" id="nombre-usuario" value="Usuario123">
+					</div>
+					<div class="col-8 justify-content-center">	
+					  	<img class="col-4" id="foto-perfil" src="./img/anonimo.jpg" alt="" class="foto-perfil"/>		
+					 	<span class="col-6"><i class="fa-solid fa-pencil"></i></span>
+					</div>	
 				<div class="col-12">		
 					<button type="button" class="btn btn-light btn-salir">Salir</button>
 		

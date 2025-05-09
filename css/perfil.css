@@ -48,7 +48,7 @@ body {
  /*   display: flex;
    // flex-direction: column;   */
     align-items: center;
-    padding-top: 70px;
+    padding-top: 40px;
     padding-left: 20px;
     padding-right: 20px;
     position: fixed;  
@@ -111,16 +111,19 @@ body {
 /* Estilo para el botón de perfil con imagen */
 .toggle-btn-right {
     position: fixed;
-    width: 50px;
-    height: 50px;
-    top: 20px; /* Mantenerlo en la parte superior */
-    right: 20px; /* Mantenerlo en la derecha */
+    width: 50px; /* Tamaño del contenedor */
+    height: 50px; /* Tamaño del contenedor */
+    top: 20px;
+    right: 20px;
     background-image: url('../img/icono-anonimo.png');
+    background-size: cover; /* Ajustar la imagen al contenedor */
+    background-position: center; /* Centrar la imagen */
     border-radius: 50%;
     background-color: white;
     padding: 0;
     cursor: pointer;
     z-index: 1100; /* Asegurar que esté por encima de otros elementos */
+    object-fit: cover;
 }
 
 .toggle-btn-right:hover {
@@ -266,14 +269,14 @@ button:hover {
 
 
 .foto-perfil {
-    width: 150px; /* Aumentar el tamaño */
-    height: 150px; /* Aumentar el tamaño */
-    margin-top: 0; /* Eliminar el margen superior */
-    position: relative;
-    border-radius: 50%; /* Hacer la imagen circular */;
-    box-shadow: 1px 4px 12px rgba(255, 0, 255, 0.6);
-    border: rgba(255, 0, 255, 0.6) solid 2px; /* Borde verde */    
-    top: -250px; /* Mover hacia arriba */
+    position: relative; /* Cambiar de fixed a relative */
+    top: -220px; /* Subir la posición */
+    left: 30px; /* Ajustar la posición horizontal */
+    width: 100px; /* Ajustar al ancho del contenedor */
+    height: 100px; /* Mantener la proporción de la imagen */
+    max-width: 200px; /* Tamaño máximo */
+    border-radius: 50%; /* Mantener la forma circular */
+    object-fit: cover; /* Asegurar que la imagen se ajuste al contenedor */
 }
 
 /* Mostrar el footer en pantallas más pequeñas */
